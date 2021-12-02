@@ -20,8 +20,11 @@ public class Starter {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(addProductsServlet), "/products/add");
         context.addServlet(new ServletHolder(deleteProductsServlet), "/products/delete");
-        context.addServlet(new ServletHolder(editProductsServlet), "/products/edit");
+        context.addServlet(new ServletHolder(editProductsServlet), "/products/edit.ftl");
         context.addServlet(new ServletHolder(allProductsServlet), "/products");
+
+        // TODO make home page
+        context.addServlet(new ServletHolder(allProductsServlet), "/");
 
         Server server = new Server(DEFAULT_PORT);
         server.setHandler(context);
