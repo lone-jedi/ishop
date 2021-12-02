@@ -23,4 +23,16 @@ public class ProductService {
     public void delete(long id) {
         productDao.delete(id);
     }
+
+    public void update(long id, String name, double price) {
+        update(id, new Product(name, price));
+    }
+
+    public void update(long id, Product product) {
+        productDao.update(id, product);
+    }
+
+    public Product get(long id) {
+        return productDao.get(id);
+    }
 }
