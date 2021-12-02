@@ -5,13 +5,15 @@ import com.yarkin.ishop.mappers.ProductRowMapper;
 import com.yarkin.ishop.utils.jdbc.JdbcConnection;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDao {
-    private static final String SELECT_ALL = "SELECT id, name, price, creation_date FROM product";
+    private static final String SELECT_ALL = "SELECT id, name, price, creation_date FROM product ORDER BY id DESC";
+    public static final String INSERT = "INSERT INTO product(name, price) VALUES (?, ?);";
 
     public static final ProductRowMapper PRODUCT_ROW_MAPPER = new ProductRowMapper();
 
@@ -33,5 +35,17 @@ public class ProductDao {
         }
 
         return result;
+    }
+
+    public void add(Product product) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT);
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

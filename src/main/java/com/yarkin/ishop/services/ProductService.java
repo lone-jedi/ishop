@@ -11,4 +11,12 @@ public class ProductService {
     public List<Product> getAll() {
         return productDao.getAll();
     }
+
+    public void add(String name, double price) {
+        add(new Product(name, price));
+    }
+
+    public void add(Product product) {
+        productDao.add(product);
+    }
 }

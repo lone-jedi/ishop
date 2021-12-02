@@ -14,6 +14,7 @@
 <div class="container">
     <h1>All products</h1>
     <hr>
+    <a class="btn btn-primary mb-2" href="/products/add">New product</a>
     <table class="table table-striped table-hover table-bordered">
         <thead class="table-dark">
         <tr>
