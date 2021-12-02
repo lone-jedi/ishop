@@ -14,6 +14,7 @@ import java.util.List;
 public class ProductDao {
     private static final String SELECT_ALL = "SELECT id, name, price, creation_date FROM product ORDER BY id DESC";
     public static final String INSERT = "INSERT INTO product(name, price) VALUES (?, ?);";
+    private static final String DELETE_BY_ID = "DELETE FROM product WHERE id=?";
 
     public static final ProductRowMapper PRODUCT_ROW_MAPPER = new ProductRowMapper();
 
@@ -42,6 +43,17 @@ public class ProductDao {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(long id) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            preparedStatement.setLong(1, id);
 
             preparedStatement.execute();
         } catch (SQLException e) {

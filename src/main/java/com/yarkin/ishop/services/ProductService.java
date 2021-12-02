@@ -19,4 +19,8 @@ public class ProductService {
     public void add(Product product) {
         productDao.add(product);
     }
+
+    public void delete(long id) {
+        productDao.delete(id);
+    }
 }
