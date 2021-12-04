@@ -25,12 +25,9 @@ public class ProductDao {
     public List<Product> getAll() {
         List<Product> result;
 
-        try {
-            // TODO Close ResultSet
-            ResultSet resultSet = CONNECTION.prepareStatement(SELECT_ALL).executeQuery();
-
+        try (ResultSet resultSet = CONNECTION.prepareStatement(SELECT_ALL).executeQuery();) {
             result = new ArrayList<>();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 result.add(PRODUCT_ROW_MAPPER.mapRow(resultSet));
             }
         } catch (SQLException e) {
@@ -42,12 +39,9 @@ public class ProductDao {
     }
 
     public void add(Product product) {
-        try {
-            // TODO Close PreparedStatement
-            PreparedStatement preparedStatement = CONNECTION.prepareStatement(INSERT);
+        try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(INSERT);) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
-
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -56,11 +50,8 @@ public class ProductDao {
     }
 
     public void delete(long id) {
-        try {
-            // TODO Close PreparedStatement
-            PreparedStatement preparedStatement = CONNECTION.prepareStatement(DELETE_BY_ID);
+        try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(DELETE_BY_ID);) {
             preparedStatement.setLong(1, id);
-
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,13 +60,10 @@ public class ProductDao {
     }
 
     public void update(long id, Product product) {
-        try {
-            // TODO Close PreparedStatement
-            PreparedStatement preparedStatement = CONNECTION.prepareStatement(UPDATE);
+        try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(UPDATE);) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setLong(3, id);
-
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,16 +74,13 @@ public class ProductDao {
     public Product get(long id) {
         Product product;
 
-        try {
-            // TODO Close PreparedStatement
-            PreparedStatement preparedStatement = CONNECTION.prepareStatement(SELECT_BY_ID);
+        try (PreparedStatement preparedStatement = CONNECTION.prepareStatement(SELECT_BY_ID);) {
             preparedStatement.setLong(1, id);
 
-            // TODO Close ResultSet
-            ResultSet resultSet = preparedStatement.executeQuery();
-            resultSet.next();
-
-            product = PRODUCT_ROW_MAPPER.mapRow(resultSet);
+            try (ResultSet resultSet = preparedStatement.executeQuery();) {
+                resultSet.next();
+                product = PRODUCT_ROW_MAPPER.mapRow(resultSet);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error with getting product by id=" + id, e);
