@@ -20,16 +20,14 @@ public class ProductDao {
 
     public static final ProductRowMapper PRODUCT_ROW_MAPPER = new ProductRowMapper();
 
-
-
-    private final Connection connection = JdbcConnection.instance();
-
+    private static final Connection CONNECTION = JdbcConnection.instance();
 
     public List<Product> getAll() {
-        List<Product> result = null;
+        List<Product> result;
 
         try {
-            ResultSet resultSet = connection.prepareStatement(SELECT_ALL).executeQuery();
+            // TODO Close ResultSet
+            ResultSet resultSet = CONNECTION.prepareStatement(SELECT_ALL).executeQuery();
 
             result = new ArrayList<>();
             while(resultSet.next()) {
@@ -37,6 +35,7 @@ public class ProductDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error with getting  all products", e);
         }
 
         return result;
@@ -44,30 +43,35 @@ public class ProductDao {
 
     public void add(Product product) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT);
+            // TODO Close PreparedStatement
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(INSERT);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
 
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error with adding product " + product.getName(), e);
         }
     }
 
     public void delete(long id) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID);
+            // TODO Close PreparedStatement
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(DELETE_BY_ID);
             preparedStatement.setLong(1, id);
 
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error with deleting product by id=" + id, e);
         }
     }
 
     public void update(long id, Product product) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
+            // TODO Close PreparedStatement
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(UPDATE);
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
             preparedStatement.setLong(3, id);
@@ -75,22 +79,26 @@ public class ProductDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error with updating product by id=" + id, e);
         }
     }
 
     public Product get(long id) {
-        Product product = null;
+        Product product;
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_BY_ID);
+            // TODO Close PreparedStatement
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement(SELECT_BY_ID);
             preparedStatement.setLong(1, id);
 
+            // TODO Close ResultSet
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
 
             product = PRODUCT_ROW_MAPPER.mapRow(resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Error with getting product by id=" + id, e);
         }
 
         return product;

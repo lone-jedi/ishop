@@ -17,10 +17,8 @@ public class AllProductsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Product> products = productService.getAll();
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("products", products);
         response.getWriter().print(
-                PageGenerator.instance().getPage("products/all.ftl", parameters));
+                PageGenerator.instance().getPage("products/all.ftl",
+                        Map.of("products", productService.getAll())));
     }
 }

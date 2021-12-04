@@ -1,5 +1,6 @@
 package com.yarkin.ishop;
 
+import com.yarkin.ishop.servlets.errors.NotFoundServlet;
 import com.yarkin.ishop.servlets.products.AddProductsServlet;
 import com.yarkin.ishop.servlets.products.AllProductsServlet;
 import com.yarkin.ishop.servlets.products.DeleteProductsServlet;
@@ -16,12 +17,15 @@ public class Starter {
         DeleteProductsServlet deleteProductsServlet = new DeleteProductsServlet();
         EditProductsServlet editProductsServlet = new EditProductsServlet();
         AllProductsServlet allProductsServlet = new AllProductsServlet();
+        NotFoundServlet notFoundServlet = new NotFoundServlet();
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(addProductsServlet), "/products/add");
         context.addServlet(new ServletHolder(deleteProductsServlet), "/products/delete");
         context.addServlet(new ServletHolder(editProductsServlet), "/products/edit");
         context.addServlet(new ServletHolder(allProductsServlet), "/products");
+
+        context.addServlet(new ServletHolder(notFoundServlet), "/404");
 
         // TODO make home page
         context.addServlet(new ServletHolder(allProductsServlet), "/");

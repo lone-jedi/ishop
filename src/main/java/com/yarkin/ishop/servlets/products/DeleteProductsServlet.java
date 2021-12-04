@@ -13,8 +13,12 @@ public class DeleteProductsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long id = Long.parseLong(request.getParameter("id"));
-        productService.delete(id);
-        response.sendRedirect("/products");
+        try {
+            long id = Long.parseLong(request.getParameter("id"));
+            productService.delete(id);
+            response.sendRedirect("/products");
+        } catch(RuntimeException e) {
+            response.sendRedirect("/404?error_message=" + e.getMessage());
+        }
     }
 }

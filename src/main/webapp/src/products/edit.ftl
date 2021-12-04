@@ -14,14 +14,24 @@
 <body>
 <div class="container">
     <h1>Edit product</h1>
-    <i>Created: ${product.creationDate}</i>
+    <i>Created: ${(product.creationDate)!}</i>
     <hr>
+
+    <#if error_message??>
+        <div class="mb3">
+            <div class="alert alert-danger" role="alert">
+                ${error_message}
+            </div>
+        </div>
+    </#if>
+
     <form action="/products/edit" method="post">
         <input type="hidden" name="id" value="${product.id}">
+
         <div class="mb-3">
             <label for="exampleInputProduct1" class="form-label">Product name</label>
             <input type="text" class="form-control" id="exampleInputProduct1"
-                   name="name" aria-describedby="productHelp" value="${product.name}" required>
+                   name="name" aria-describedby="productHelp" value="${product.name!}" required>
             <div id="productHelp" class="form-text">Enter a product name</div>
         </div>
 

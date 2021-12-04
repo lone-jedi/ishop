@@ -16,17 +16,27 @@
     <h1>Add new product</h1>
     <hr>
     <form action="/products/add" method="post">
+        <#if error_message??>
+            <div class="mb3">
+                <div class="alert alert-danger" role="alert">
+                    ${error_message}
+                </div>
+            </div>
+        </#if>
+
         <div class="mb-3">
             <label for="exampleInputProduct1" class="form-label">Product name</label>
             <input type="text" class="form-control" id="exampleInputProduct1"
-                   name="name" aria-describedby="productHelp" required>
+                   name="name" aria-describedby="productHelp"
+                   value="${name!}" required>
             <div id="productHelp" class="form-text">Enter a product name</div>
         </div>
 
         <div class="mb-3">
             <label for="exampleInputPrice1" class="form-label">Product price</label>
             <input type="number" step="0.0001" class="form-control" id="exampleInputPrice1"
-                   name="price" aria-describedby="priceHelp" required>
+                   name="price" aria-describedby="priceHelp"
+                   value="${price!}" required>
             <div id="priceHelp" class="form-text">Enter a product price</div>
         </div>
 
