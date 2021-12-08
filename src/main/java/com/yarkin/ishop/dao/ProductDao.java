@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ProductDao {
     private static final String SELECT_ALL = "SELECT id, name, price, creation_date FROM product ORDER BY id DESC";
     public static final String INSERT = "INSERT INTO product(name, price) VALUES (?, ?);";
@@ -28,7 +29,8 @@ public class ProductDao {
         try (ResultSet resultSet = CONNECTION.prepareStatement(SELECT_ALL).executeQuery();) {
             result = new ArrayList<>();
             while (resultSet.next()) {
-                result.add(PRODUCT_ROW_MAPPER.mapRow(resultSet));
+                Product product = PRODUCT_ROW_MAPPER.mapRow(resultSet);
+                result.add(product);
             }
         } catch (SQLException e) {
             e.printStackTrace();
