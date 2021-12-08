@@ -2,15 +2,22 @@ package com.yarkin.ishop.services;
 
 import com.yarkin.ishop.dao.ProductDao;
 import com.yarkin.ishop.entities.Product;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
+@Slf4j
 public class ProductService {
     ProductDao productDao = new ProductDao();
 
     public List<Product> getAll() {
-        return productDao.getAll();
+        List<Product> products = productDao.getAll();
+        log.info("Get all products: {}", products.stream()
+                .map(product -> String.valueOf(product))
+                .collect(Collectors.joining("\n\t", "\n{\n\t", "\n}")));
+        return products;
     }
 
     public void add(String name, double price) {
@@ -33,10 +40,13 @@ public class ProductService {
     public void update(long id, Product product) {
         validate(product);
         productDao.update(id, product);
+        log.info("Update product with id={} to {}", id, product);
     }
 
     public Product get(long id) {
-        return productDao.get(id);
+        Product product = productDao.get(id);
+        log.info("Get product: {}", product);
+        return product;
     }
 
     public boolean validate(Product product) {

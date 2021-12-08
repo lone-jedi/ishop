@@ -1,0 +1,16 @@
+<configuration>
+    <property name="pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <appender name="STD_OUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="DEBUG">
+        <appender-ref ref="STD_OUT"/>
+    </root>
+
+    <!-- Disable jetty DEBUG logs -->
+    <logger name="org.eclipse.jetty" level="INFO"/>
+</configuration>
