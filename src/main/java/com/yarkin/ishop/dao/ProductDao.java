@@ -2,7 +2,6 @@ package com.yarkin.ishop.dao;
 
 import com.yarkin.ishop.entities.Product;
 import com.yarkin.ishop.mappers.ProductRowMapper;
-import com.yarkin.ishop.utils.jdbc.JdbcConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +20,11 @@ public class ProductDao {
 
     public static final ProductRowMapper PRODUCT_ROW_MAPPER = new ProductRowMapper();
 
-    private static final Connection CONNECTION = JdbcConnection.instance();
+    private final Connection CONNECTION;
+
+    public ProductDao(Connection connection) {
+        CONNECTION = connection;
+    }
 
     public List<Product> getAll() {
         List<Product> result;

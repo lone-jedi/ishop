@@ -9,13 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DeleteProductsServlet extends HttpServlet {
-    private final ProductService productService = new ProductService();
+    private final ProductService PRODUCT_SERVICE;
+
+    public DeleteProductsServlet(ProductService productService) {
+        PRODUCT_SERVICE = productService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             long id = Long.parseLong(request.getParameter("id"));
-            productService.delete(id);
+            PRODUCT_SERVICE.delete(id);
             response.sendRedirect("/products");
         } catch(RuntimeException e) {
             response.sendRedirect("/404?error_message=" + e.getMessage());

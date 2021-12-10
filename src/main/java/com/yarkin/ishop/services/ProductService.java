@@ -10,10 +10,14 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class ProductService {
-    ProductDao productDao = new ProductDao();
+    private final ProductDao PRODUCT_DAO;
+
+    public ProductService(ProductDao productDao) {
+        PRODUCT_DAO = productDao;
+    }
 
     public List<Product> getAll() {
-        List<Product> products = productDao.getAll();
+        List<Product> products = PRODUCT_DAO.getAll();
         log.info("Get all products: {}", products.stream()
                 .map(product -> String.valueOf(product))
                 .collect(Collectors.joining("\n\t", "\n{\n\t", "\n}")));
@@ -26,11 +30,11 @@ public class ProductService {
 
     public void add(Product product) {
         validate(product);
-        productDao.add(product);
+        PRODUCT_DAO.add(product);
     }
 
     public void delete(long id) {
-        productDao.delete(id);
+        PRODUCT_DAO.delete(id);
     }
 
     public void update(long id, String name, double price) {
@@ -39,12 +43,12 @@ public class ProductService {
 
     public void update(long id, Product product) {
         validate(product);
-        productDao.update(id, product);
+        PRODUCT_DAO.update(id, product);
         log.info("Update product with id={} to {}", id, product);
     }
 
     public Product get(long id) {
-        Product product = productDao.get(id);
+        Product product = PRODUCT_DAO.get(id);
         log.info("Get product: {}", product);
         return product;
     }

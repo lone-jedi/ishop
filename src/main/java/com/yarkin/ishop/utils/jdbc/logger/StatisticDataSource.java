@@ -17,8 +17,13 @@ public class StatisticDataSource implements DataSource, AutoCloseable {
     private Connection connection;
 
     @Override
-    public Connection getConnection() throws SQLException {
-        return getConnection(DEFAULT_DB_USER, DEFAULT_DB_PASSWORD);
+    public Connection getConnection()  {
+        try {
+            return getConnection(DEFAULT_DB_USER, DEFAULT_DB_PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Cannot open connection", e);
+        }
     }
 
     @Override
