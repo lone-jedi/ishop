@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddProductsServlet extends HttpServlet {
-    private final ProductService productService = new ProductService();
+    private static final ProductService PRODUCT_SERVICE = new ProductService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -26,7 +26,7 @@ public class AddProductsServlet extends HttpServlet {
 
         try {
             price = Double.parseDouble(request.getParameter("price"));
-            productService.add(name, price);
+            PRODUCT_SERVICE.add(name, price);
             response.sendRedirect("/products");
         } catch (RuntimeException e) {
             Map<String, Object> parameters = new HashMap<>();

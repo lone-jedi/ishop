@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditProductsServlet extends HttpServlet {
-    private final ProductService productService = new ProductService();
+    private static final ProductService PRODUCT_SERVICE = new ProductService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,7 +21,7 @@ public class EditProductsServlet extends HttpServlet {
 
         try {
             long id = Long.parseLong(request.getParameter("id"));
-            parameters.put("product", productService.get(id));
+            parameters.put("product", PRODUCT_SERVICE.get(id));
             response.getWriter().print(
                     PageGenerator.instance().getPage("products/edit.ftl", parameters));
         } catch(RuntimeException e) {
@@ -36,7 +36,7 @@ public class EditProductsServlet extends HttpServlet {
         long id = Long.parseLong(request.getParameter("id"));;
 
         try {
-            productService.update(id, name, price);
+            PRODUCT_SERVICE.update(id, name, price);
             response.sendRedirect("/products");
         } catch(RuntimeException e) {
             Map<String, Object> parameters = new HashMap<>();

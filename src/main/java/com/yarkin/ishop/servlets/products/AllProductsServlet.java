@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.Map;
 
 public class AllProductsServlet extends HttpServlet {
-    private final ProductService productService = new ProductService();
+    private static final ProductService PRODUCT_SERVICE = new ProductService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.getWriter().print(
                 PageGenerator.instance().getPage("products/all.ftl",
-                        Map.of("products", productService.getAll())));
+                        Map.of("products", PRODUCT_SERVICE.getAll())));
     }
 }

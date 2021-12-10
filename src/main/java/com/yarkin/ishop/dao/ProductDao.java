@@ -21,7 +21,7 @@ public class ProductDao {
 
     public static final ProductRowMapper PRODUCT_ROW_MAPPER = new ProductRowMapper();
 
-    private static final Connection CONNECTION = JdbcConnection.instance();
+    private static final Connection CONNECTION = JdbcConnection.CONNECTION;
 
     public List<Product> getAll() {
         List<Product> result;
