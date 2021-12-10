@@ -10,7 +10,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class ProductService {
-    private static final ProductDao PRODUCT_DAO = new ProductDao();
+    private final ProductDao PRODUCT_DAO;
+
+    public ProductService(ProductDao productDao) {
+        PRODUCT_DAO = productDao;
+    }
 
     public List<Product> getAll() {
         List<Product> products = PRODUCT_DAO.getAll();

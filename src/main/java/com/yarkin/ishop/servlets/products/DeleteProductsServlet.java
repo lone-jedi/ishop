@@ -9,7 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DeleteProductsServlet extends HttpServlet {
-    private static final ProductService PRODUCT_SERVICE = new ProductService();
+    private final ProductService PRODUCT_SERVICE;
+
+    public DeleteProductsServlet(ProductService productService) {
+        PRODUCT_SERVICE = productService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

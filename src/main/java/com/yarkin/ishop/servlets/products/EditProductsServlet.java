@@ -13,7 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditProductsServlet extends HttpServlet {
-    private static final ProductService PRODUCT_SERVICE = new ProductService();
+    private final ProductService PRODUCT_SERVICE;
+
+    public EditProductsServlet(ProductService productService) {
+        PRODUCT_SERVICE = productService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
