@@ -21,47 +21,44 @@ public class Starter {
     private static final int DEFAULT_PORT = 8080;
 
     public static void main(String[] args) throws Exception {
-        try (final Connection CONNECTION = new StatisticDataSource().getConnection();) {
-            // config
-            final ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        // config
+        final Connection CONNECTION = new StatisticDataSource().getConnection();
+        final ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
-            // dao
-            final ProductDao productDao = new ProductDao(CONNECTION);
+        // dao
+        final ProductDao productDao = new ProductDao(CONNECTION);
 
-            // service
-            final ProductService productService = new ProductService(productDao);
+        // service
+        final ProductService productService = new ProductService(productDao);
 
-            // servlets
-            final AddProductsServlet addProductsServlet = new AddProductsServlet(productService);
-            final DeleteProductsServlet deleteProductsServlet = new DeleteProductsServlet(productService);
-            final EditProductsServlet editProductsServlet = new EditProductsServlet(productService);
-            final AllProductsServlet allProductsServlet = new AllProductsServlet(productService);
+        // servlets
+        final AddProductsServlet addProductsServlet = new AddProductsServlet(productService);
+        final DeleteProductsServlet deleteProductsServlet = new DeleteProductsServlet(productService);
+        final EditProductsServlet editProductsServlet = new EditProductsServlet(productService);
+        final AllProductsServlet allProductsServlet = new AllProductsServlet(productService);
 
-            final LoginServlet loginServlet = new LoginServlet();
-            final LogoutServlet logoutServlet = new LogoutServlet();
-            final RegistrationServlet registrationServlet = new RegistrationServlet();
+        final LoginServlet loginServlet = new LoginServlet();
+        final LogoutServlet logoutServlet = new LogoutServlet();
+        final RegistrationServlet registrationServlet = new RegistrationServlet();
 
-            final NotFoundServlet notFoundServlet = new NotFoundServlet();
+        final NotFoundServlet notFoundServlet = new NotFoundServlet();
 
-            context.addServlet(new ServletHolder(addProductsServlet), "/products/add");
-            context.addServlet(new ServletHolder(deleteProductsServlet), "/products/delete");
-            context.addServlet(new ServletHolder(editProductsServlet), "/products/edit");
-            context.addServlet(new ServletHolder(allProductsServlet), "/products");
+        context.addServlet(new ServletHolder(addProductsServlet), "/products/add");
+        context.addServlet(new ServletHolder(deleteProductsServlet), "/products/delete");
+        context.addServlet(new ServletHolder(editProductsServlet), "/products/edit");
+        context.addServlet(new ServletHolder(allProductsServlet), "/products");
 
-            context.addServlet(new ServletHolder(loginServlet), "/login");
-            context.addServlet(new ServletHolder(logoutServlet), "/logout");
-            context.addServlet(new ServletHolder(registrationServlet), "/registration");
+        context.addServlet(new ServletHolder(loginServlet), "/login");
+        context.addServlet(new ServletHolder(logoutServlet), "/logout");
+        context.addServlet(new ServletHolder(registrationServlet), "/registration");
 
-            context.addServlet(new ServletHolder(notFoundServlet), "/404");
+        context.addServlet(new ServletHolder(notFoundServlet), "/404");
 
-            // TODO make home page
-            context.addServlet(new ServletHolder(allProductsServlet), "/");
+        // TODO make home page
+        context.addServlet(new ServletHolder(allProductsServlet), "/");
 
-            Server server = new Server(DEFAULT_PORT);
-            server.setHandler(context);
-
-            server.start();
-        }
-
+        Server server = new Server(DEFAULT_PORT);
+        server.setHandler(context);
+        server.start();
     }
 }
