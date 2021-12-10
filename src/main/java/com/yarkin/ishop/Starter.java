@@ -44,10 +44,10 @@ public class Starter {
         final NotFoundServlet notFoundServlet = new NotFoundServlet();
 
         // routing
-        context.addServlet(new ServletHolder(addProductsServlet), "/products/add");
-        context.addServlet(new ServletHolder(deleteProductsServlet), "/products/delete");
-        context.addServlet(new ServletHolder(editProductsServlet), "/products/edit");
-        context.addServlet(new ServletHolder(allProductsServlet), "/products");
+        context.addServlet(new ServletHolder(addProductsServlet), "/product/add");
+        context.addServlet(new ServletHolder(deleteProductsServlet), "/product/delete");
+        context.addServlet(new ServletHolder(editProductsServlet), "/product/edit");
+        context.addServlet(new ServletHolder(allProductsServlet), "/product/all");
 
         context.addServlet(new ServletHolder(loginServlet), "/login");
         context.addServlet(new ServletHolder(logoutServlet), "/logout");

@@ -1,5 +1,7 @@
 package com.yarkin.ishop.servlets.security;
 
+import com.yarkin.ishop.utils.templater.PageGenerator;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +11,9 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // TODO print login form
+        response.getWriter().write(
+                PageGenerator.instance().getPage("security/login.ftl")
+        );
     }
 
     @Override
