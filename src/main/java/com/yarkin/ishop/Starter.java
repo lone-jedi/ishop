@@ -43,6 +43,7 @@ public class Starter {
 
         final NotFoundServlet notFoundServlet = new NotFoundServlet();
 
+        // routing
         context.addServlet(new ServletHolder(addProductsServlet), "/products/add");
         context.addServlet(new ServletHolder(deleteProductsServlet), "/products/delete");
         context.addServlet(new ServletHolder(editProductsServlet), "/products/edit");
@@ -57,6 +58,7 @@ public class Starter {
         // TODO make home page
         context.addServlet(new ServletHolder(allProductsServlet), "/");
 
+        // starting server
         Server server = new Server(DEFAULT_PORT);
         server.setHandler(context);
         server.start();
