@@ -62,15 +62,14 @@
     <div class="back">
         <div class="div-center">
             <div class="content">
+                <#if error_msg??>
+                    <div>
+                        <p class="alert-warning">${error_msg}</p>
+                    </div>
+                </#if>
                 <h3>Welcome new user</h3>
                 <hr/>
-                <form action="#" method="post">
-                    <#if error_msg??>
-                        <div>
-                            <p class="alert-warning">${error_msg}</p>
-                        </div>
-                    </#if>
-
+                <form action="/registration" method="post">
                     <div class="mt-2 form-outline">
                         <input type="email" id="typeEmail" class="form-control"
                                value="${email!}" name="email" required/>

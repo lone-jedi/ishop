@@ -1,7 +1,10 @@
 package com.yarkin.ishop;
 
 import com.yarkin.ishop.dao.ProductDao;
+import com.yarkin.ishop.dao.UserDao;
 import com.yarkin.ishop.services.ProductService;
+import com.yarkin.ishop.services.SecurityService;
+import com.yarkin.ishop.services.UserService;
 import com.yarkin.ishop.servlets.errors.NotFoundServlet;
 import com.yarkin.ishop.servlets.products.AddProductsServlet;
 import com.yarkin.ishop.servlets.products.AllProductsServlet;
@@ -27,9 +30,12 @@ public class Starter {
 
         // dao
         final ProductDao productDao = new ProductDao(CONNECTION);
+        final UserDao userDao = new UserDao(CONNECTION);
 
         // service
         final ProductService productService = new ProductService(productDao);
+        final UserService userService = new UserService(userDao);
+        final SecurityService securityService = new SecurityService(userDao);
 
         // servlets
         final AddProductsServlet addProductsServlet = new AddProductsServlet(productService);
@@ -37,9 +43,9 @@ public class Starter {
         final EditProductsServlet editProductsServlet = new EditProductsServlet(productService);
         final AllProductsServlet allProductsServlet = new AllProductsServlet(productService);
 
-        final LoginServlet loginServlet = new LoginServlet();
+        final LoginServlet loginServlet = new LoginServlet(securityService);
         final LogoutServlet logoutServlet = new LogoutServlet();
-        final RegistrationServlet registrationServlet = new RegistrationServlet();
+        final RegistrationServlet registrationServlet = new RegistrationServlet(securityService);
 
         final NotFoundServlet notFoundServlet = new NotFoundServlet();
 

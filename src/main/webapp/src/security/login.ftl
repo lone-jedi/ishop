@@ -64,13 +64,12 @@
             <div class="content">
                 <h3>Login</h3>
                 <hr/>
-                <form action="#" method="post">
-                    <#if error_msg??>
-                        <div>
-                            <p class="alert-warning">${error_msg}</p>
-                        </div>
-                    </#if>
-
+                <#if error_message??>
+                    <div>
+                        <p class="alert-warning">${error_message}</p>
+                    </div>
+                </#if>
+                <form action="/login" method="post">
                     <div class="mt-2 form-outline">
                         <input type="email" id="typeEmail" class="form-control"
                                value="${email!}" name="email" required/>
@@ -82,7 +81,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <button type="submit" class="mt-4 btn btn-primary">Register</button>
+                            <button type="submit" class="mt-4 btn btn-primary">Login</button>
                         </div>
                         <div class="col-6">
                             <a class="mt-4 btn btn-light" href="/">Back to home</a>
