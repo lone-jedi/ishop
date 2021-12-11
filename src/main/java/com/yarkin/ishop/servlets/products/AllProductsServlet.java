@@ -23,6 +23,7 @@ public class AllProductsServlet extends HttpServlet {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("products", PRODUCT_SERVICE.getAll());
         parameters.put("user_email", request.getSession().getAttribute("user_email"));
+        parameters.put("message", request.getParameter("message"));
 
         response.getWriter().write(
                 PageGenerator.instance().getPage("products/all.ftl", parameters));

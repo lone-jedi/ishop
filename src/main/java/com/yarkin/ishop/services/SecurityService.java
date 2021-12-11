@@ -2,6 +2,7 @@ package com.yarkin.ishop.services;
 
 import com.yarkin.ishop.dao.UserDao;
 import com.yarkin.ishop.entities.User;
+import com.yarkin.ishop.exceptions.AccessDeniedException;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.Objects;
@@ -41,11 +42,19 @@ public class SecurityService {
                 .build());
     }
 
-    public String hashPassword(String password, String salt) {
+    public void auth(String userEmail) {
+        if(userEmail == null) {
+            throw new AccessDeniedException("Access denied, please login");
+        }
+    }
+
+    private String hashPassword(String password, String salt) {
         return DigestUtils.sha256Hex(salt + password);
     }
 
-    public String generateRandomSalt() {
+    private String generateRandomSalt() {
         return UUID.randomUUID().toString();
     }
+
+
 }

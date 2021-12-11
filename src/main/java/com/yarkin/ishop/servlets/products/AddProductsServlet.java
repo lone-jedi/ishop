@@ -1,7 +1,10 @@
 package com.yarkin.ishop.servlets.products;
 
+import com.yarkin.ishop.exceptions.AccessDeniedException;
 import com.yarkin.ishop.services.ProductService;
+import com.yarkin.ishop.services.SecurityService;
 import com.yarkin.ishop.utils.templater.PageGenerator;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +15,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AddProductsServlet extends HttpServlet {
-    private final ProductService PRODUCT_SERVICE;
+    private final ProductService productService;
+    private final SecurityService securityService;
 
-    public AddProductsServlet(ProductService productService) {
-        PRODUCT_SERVICE = productService;
+    public AddProductsServlet(ProductService productService, SecurityService securityService) {
+        this.productService = productService;
+        this.securityService = securityService;
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().print(PageGenerator.instance().getPage("products/add.ftl"));
+        try {
+            securityService.auth((String) request.getSession().getAttribute("user_email"));
+            response.getWriter().print(PageGenerator.instance().getPage("products/add.ftl"));
+        } catch (AccessDeniedException e) {
+            response.sendRedirect("/product/all?message=" + e.getMessage());
+        }
     }
 
     @Override
@@ -29,9 +39,12 @@ public class AddProductsServlet extends HttpServlet {
         double price = 0;
 
         try {
+            securityService.auth((String) request.getSession().getAttribute("user_email"));
             price = Double.parseDouble(request.getParameter("price"));
-            PRODUCT_SERVICE.add(name, price);
-            response.sendRedirect("/products");
+            productService.add(name, price);
+            response.sendRedirect("/product/all");
+        } catch (AccessDeniedException e) {
+            response.sendRedirect("/product/all?message=" + e.getMessage());
         } catch (RuntimeException e) {
             Map<String, Object> parameters = new HashMap<>();
             parameters.put("name", name);

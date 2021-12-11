@@ -25,7 +25,7 @@
         </div>
     </#if>
 
-    <form action="/products/edit" method="post">
+    <form action="/product/edit" method="post">
         <input type="hidden" name="id" value="${product.id}">
 
         <div class="mb-3">
@@ -38,7 +38,7 @@
         <div class="mb-3">
             <label for="exampleInputPrice1" class="form-label">Product price</label>
             <input type="number" step="0.0001" class="form-control" id="exampleInputPrice1"
-                   name="price" aria-describedby="priceHelp" value="${product.price}" required>
+                   name="price" aria-describedby="priceHelp" value="${product.price?string.computer33}" required>
             <div id="priceHelp" class="form-text">Enter a product price</div>
         </div>
 

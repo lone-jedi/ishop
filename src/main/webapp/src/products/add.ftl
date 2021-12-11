@@ -15,7 +15,7 @@
 <div class="container">
     <h1>Add new product</h1>
     <hr>
-    <form action="/products/add" method="post">
+    <form action="/product/add" method="post">
         <#if error_message??>
             <div class="mb3">
                 <div class="alert alert-danger" role="alert">

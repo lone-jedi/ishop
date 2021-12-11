@@ -38,9 +38,9 @@ public class Starter {
         final SecurityService securityService = new SecurityService(userDao);
 
         // servlets
-        final AddProductsServlet addProductsServlet = new AddProductsServlet(productService);
-        final DeleteProductsServlet deleteProductsServlet = new DeleteProductsServlet(productService);
-        final EditProductsServlet editProductsServlet = new EditProductsServlet(productService);
+        final AddProductsServlet addProductsServlet = new AddProductsServlet(productService, securityService);
+        final DeleteProductsServlet deleteProductsServlet = new DeleteProductsServlet(productService, securityService);
+        final EditProductsServlet editProductsServlet = new EditProductsServlet(productService, securityService);
         final AllProductsServlet allProductsServlet = new AllProductsServlet(productService);
 
         final LoginServlet loginServlet = new LoginServlet(securityService);
