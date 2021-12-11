@@ -31,7 +31,7 @@ public class RegistrationServlet extends HttpServlet {
 
         try {
             securityService.register(email, password);
-            response.sendRedirect("/login");
+            response.sendRedirect("/registration");
         } catch (RuntimeException e) {
             response.getWriter().write(
                     PageGenerator.instance().getPage("security/registration.ftl",

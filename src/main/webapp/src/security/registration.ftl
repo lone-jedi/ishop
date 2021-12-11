@@ -62,9 +62,9 @@
     <div class="back">
         <div class="div-center">
             <div class="content">
-                <#if error_msg??>
+                <#if error_message??>
                     <div>
-                        <p class="alert-warning">${error_msg}</p>
+                        <p class="alert-warning">${error_message}</p>
                     </div>
                 </#if>
                 <h3>Welcome new user</h3>
